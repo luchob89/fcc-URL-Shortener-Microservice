@@ -60,11 +60,17 @@ app.post('/api/shorturl', async function(req, res, next) {
 
 });
 
-app.get('/api/shorturl/:shortUrlNumber', async (req, res) => {
+app.get('/api/shorturl/:shortUrlNumber', async (req, res, next) => {
 
-  console.log(req.params)
+    console.log(req.params)
 
-  if ( req.params.shortUrlNumber == undefined || !req.params.shortUrlNumber || !Number.isInteger(req.params.shortUrlNumber) ) return res.json({ error: 'invalid url' });
+    if ( req.params.shortUrlNumber == undefined || !req.params.shortUrlNumber || !Number.isInteger(req.params.shortUrlNumber) ) {
+      console.log("entramo en error")
+      return res.json({ error: 'invalid url' });
+    }
+    next();
+
+  }, async (req, res) => {
 
   const query = Url.where({ short_url: req.params.shortUrlNumber });
   const getUrl = await query.findOne();
