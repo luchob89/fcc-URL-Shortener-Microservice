@@ -30,6 +30,9 @@ const Url = mongoose.model('Url', urlSchema);
 
 // Error handler middleware
 app.post('/api/shorturl', function(req, res, next) {
+
+  console.log('A ver si logueamos request body: ', req.body)
+
   // Chequeamos que la url sea válida
   if ( !req.body.url.includes("http") || !req.body.url.includes("https") ) return res.json({ error: 'invalid url' });
   next();
@@ -38,7 +41,7 @@ app.post('/api/shorturl', function(req, res, next) {
 // Guardado en db de nuevo url
 app.post('/api/shorturl', async function(req, res) {
 
-  console.log('A ver si logueamos request: ', req)
+  
 
   // fx auxiliar para crear random integer
   function randomInteger(min, max) {
