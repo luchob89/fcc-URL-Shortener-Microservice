@@ -62,7 +62,9 @@ app.post('/api/shorturl', async function(req, res, next) {
 
 app.get('/api/shorturl/:shortUrlNumber', async (req, res) => {
 
-  //const getUrl = await Url.find({ short_url: req.params.shortUrlNumber });
+  console.log(req.params)
+
+  if ( !req.params.shortUrlNumber || !Number.isInteger(req.params.shortUrlNumber) ) return res.json({ error: 'invalid url' });
 
   const query = Url.where({ short_url: req.params.shortUrlNumber });
   const getUrl = await query.findOne();
