@@ -36,7 +36,9 @@ app.post('/api/shorturl', function(req, res, next) {
 })
 
 // Guardado en db de nuevo url
-app.post('/api/shorturl', async function(req, res, next) {
+app.post('/api/shorturl', async function(req, res) {
+
+  console.log('A ver si logueamos request: ', req)
 
   // fx auxiliar para crear random integer
   function randomInteger(min, max) {
