@@ -34,14 +34,14 @@ app.post('/api/shorturl', function(req, res, next) {
   console.log('A ver si logueamos request body: ', req.body)
 
   // Chequeamos que la url sea válida
-  if ( !req.body.url.includes("http") || !req.body.url.includes("https") ) return res.json({ error: 'invalid url' });
+  if ( !req.body.url.includes("http") ) return res.json({ error: 'invalid url' });
   next();
 })
 
 // Guardado en db de nuevo url
 app.post('/api/shorturl', async function(req, res) {
 
-  
+  // probar con estos requests body que manda fcc: http://localhost:3000/?v=1733335749560
 
   // fx auxiliar para crear random integer
   function randomInteger(min, max) {
