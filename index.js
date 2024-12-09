@@ -31,8 +31,6 @@ const Url = mongoose.model('Url', urlSchema);
 // Error handler middleware
 app.post('/api/shorturl', function(req, res, next) {
 
-  console.log('A ver si logueamos request body: ', req.body)
-
   // Chequeamos que la url sea válida
   if ( !req.body.url.includes("http") ) return res.json({ error: 'invalid url' });
   next();
@@ -46,13 +44,14 @@ app.post('/api/shorturl', async function(req, res) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  // Generamos un número entero random para guardar en db
   const shortUrl = randomInteger(1, 50000);
 
   const newUrl = new Url({ 
     original_url: req.body.url,
     short_url: shortUrl 
   });
-  // Guardamos el registro en la colección
+  // Guardamos un nuevo documento en la colección
   await newUrl.save();
 
   // Contestamos
@@ -63,23 +62,20 @@ app.post('/api/shorturl', async function(req, res) {
 
 });
 
+// GET dynamic endpoint
 app.get('/api/shorturl/:shortUrlNumber', async (req, res, next) => {
 
-    console.log(req.params)
-
-    if ( req.params.shortUrlNumber == undefined || !req.params.shortUrlNumber ) {
-      console.log("entramo en error")
-      return res.json({ error: 'invalid url' });
-    }
+    // Verificamos primero que el parámetro sea válido
+    if ( req.params.shortUrlNumber == undefined || !req.params.shortUrlNumber ) return res.json({ error: 'invalid url' });
     next();
 
   }, async (req, res) => {
 
+  // Buscamos en la db la url que corresponde con el parámetro que llegó 
   const query = Url.where({ short_url: req.params.shortUrlNumber });
   const getUrl = await query.findOne();
 
-  console.log(getUrl)
-
+  // Si no la encontramos contestamos error
   if ( !getUrl ) return res.json({ error: 'invalid url' });
 
   // Redirigimos
