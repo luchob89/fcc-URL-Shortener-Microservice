@@ -41,8 +41,6 @@ app.post('/api/shorturl', function(req, res, next) {
 // Guardado en db de nuevo url
 app.post('/api/shorturl', async function(req, res) {
 
-  // probar con estos requests body que manda fcc: http://localhost:3000/?v=1733335749560
-
   // fx auxiliar para crear random integer
   function randomInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -69,7 +67,7 @@ app.get('/api/shorturl/:shortUrlNumber', async (req, res, next) => {
 
     console.log(req.params)
 
-    if ( req.params.shortUrlNumber == undefined || !req.params.shortUrlNumber || !Number.isInteger(req.params.shortUrlNumber) ) {
+    if ( req.params.shortUrlNumber == undefined || !req.params.shortUrlNumber ) {
       console.log("entramo en error")
       return res.json({ error: 'invalid url' });
     }
