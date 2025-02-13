@@ -13,7 +13,10 @@ app.use(cors());
 
 app.use('/public', express.static(`${process.cwd()}/public`));
 
-app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(express.json()); // Middleware to parse JSON body
+
 
 app.get('/', function(req, res) {
   res.sendFile(process.cwd() + '/views/index.html');
@@ -31,7 +34,7 @@ const Url = mongoose.model('Url', urlSchema);
 // Error handler middleware
 app.post('/api/shorturl', function(req, res, next) {
 
-  console.log(req)
+  //console.log(req)
   console.log(req.body); // Debugging: See what's being received
 
   if ( req.body.url == undefined || !req.body.url ) return res.json({ error: 'invalid req.body' });
