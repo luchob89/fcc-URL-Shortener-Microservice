@@ -33,7 +33,7 @@ app.post('/api/shorturl', function(req, res, next) {
 
   console.log(req.body); // Debugging: See what's being received
 
-  if ( req.body.url == undefined || !req.body.url ) return res.json({ error: 'invalid url' });
+  if ( req.body.url == undefined || !req.body.url ) return res.json({ error: 'invalid req.body' });
   // Chequeamos que la url sea válida
   if ( !req.body.url.includes("http") ) return res.json({ error: 'invalid url' });
   next();
