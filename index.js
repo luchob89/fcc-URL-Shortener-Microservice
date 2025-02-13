@@ -31,6 +31,7 @@ const Url = mongoose.model('Url', urlSchema);
 // Error handler middleware
 app.post('/api/shorturl', function(req, res, next) {
 
+  if ( req.body.url == undefined || !req.body.url ) return res.json({ error: 'invalid url' });
   // Chequeamos que la url sea válida
   if ( !req.body.url.includes("http") ) return res.json({ error: 'invalid url' });
   next();
